@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#3E80B4"
+    tools:context=".ConfigureOptionsActivity" >
+	<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        style="@android:style/TextAppearance.Large"
+        android:textStyle="bold"
+        android:textColor="#FFFAFA"
+        android:text="@string/set_db" />
+    <LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="30dip"
+    	android:orientation="horizontal">
+		<TextView
+    	   	android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		style="@android:style/TextAppearance.Medium"
+       		android:textStyle="italic"
+       		android:textColor="#FFFAFA"
+       		android:text="@string/email" />
+		<EditText 
+        	android:id="@+id/dbEmail"    
+        	android:layout_width="0dip"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="5dip"
+        	android:layout_weight="1"
+        	android:inputType="textEmailAddress" />
+	</LinearLayout>
+	<LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="10dip"
+    	android:orientation="horizontal">
+		<TextView
+    	   	android:layout_width="wrap_content"
+       		android:layout_height="wrap_content"
+       		style="@android:style/TextAppearance.Medium"
+       		android:textStyle="italic"
+       		android:textColor="#FFFAFA"
+       		android:text="@string/passwd" />
+		<EditText 
+        	android:id="@+id/dbPasswd"    
+        	android:layout_width="0dip"
+        	android:layout_height="wrap_content"
+        	android:layout_marginLeft="5dip"
+        	android:layout_weight="1"
+        	android:inputType="textPassword" />
+	</LinearLayout>
+	<LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="40dip"
+    	android:orientation="horizontal">
+    	<Button 
+        	android:id="@+id/btnChangePin"
+        	android:layout_width="wrap_content"
+        	android:layout_height="35dp"
+        	android:layout_marginLeft="55dip"
+        	style="@android:style/TextAppearance.Medium"
+        	android:background="@drawable/buttonback"
+        	android:textStyle="italic"
+        	android:textColor="#FFFAFA"
+        	android:text="@string/btn_update" />
+		<Button 
+        	android:id="@+id/btnCancelPin"
+        	android:layout_width="wrap_content"
+        	android:layout_height="35dp"
+        	android:layout_marginLeft="40dip"
+        	style="@android:style/TextAppearance.Medium"
+        	android:background="@drawable/buttonback"
+        	android:textStyle="italic"
+        	android:textColor="#FFFAFA"
+        	android:text="@string/btn_cancel" />
+	</LinearLayout>
+</LinearLayout>
