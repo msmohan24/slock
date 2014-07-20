@@ -26,7 +26,7 @@ public class OnBootReceiver extends BroadcastReceiver
       SharedPreferences localSharedPreferences = paramContext.getSharedPreferences("file", 0);
       String str1 = localSharedPreferences.getString("pmob", "");
       String str2 = localSharedPreferences.getString("smob", "");
-      localSharedPreferences.getString("deact", "");
+      //localSharedPreferences.getString("deact", "");
       String str3 = "*sLOCK* Android Mobile of IMEI NO: " + localTelephonyManager.getDeviceId() + " is currently using the SIM card service provider:" + localTelephonyManager.getSimOperatorName();
       String str4 = localSharedPreferences.getString("simno", "");
       String str5 = localSharedPreferences.getString("deact", "");

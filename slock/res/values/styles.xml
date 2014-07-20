@@ -17,4 +17,61 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="RoundedWhiteRect_3">
+        <item name="android:background">@drawable/rounded_white_rectangle_3</item>
+    </style>
+    
+        <style name="form_header">
+            <item name="android:textSize">18.0sp</item>
+            <item name="android:textStyle">bold</item>
+            <item name="android:textColor">#ff757575</item>
+        </style>
+        
+        <style name="TextAppearance">
+            <item name="android:textStyle">italic</item>
+            <item name="android:textColor">#ffffffff</item></style>
+            
+        <style name="MenuItemSettingsText" parent="@style/TextAppearance">
+            <item name="android:textStyle">bold</item>
+            <item name="android:textColor">#ffffffff</item></style>
+        
+        <style name="save_button"><item name="android:textSize">17.0sp</item>
+            <item name="android:textColor">#ffffffff</item>
+            <item name="android:background">@drawable/round_rect_blue_selector</item></style>
+        
+        <style name="cancel_button"><item name="android:textSize">17.0sp</item>
+            <item name="android:textColor">#ff1ba7db</item>
+            <item name="android:background">@drawable/white_rectangle_selector</item></style>
+            
+        <style name="second_data" parent="@style/TextAppearance">
+            <item name="android:textColor">#ffffffff</item></style>
+         
+        <style name="Widget"/>
+        <style name="Widget.Button" parent="@style/Widget">
+            <item name="android:textColor">#ffffffff</item>
+            <item name="android:paddingLeft">24.0dip</item>
+            <item name="android:paddingTop">12.0dip</item>
+            <item name="android:paddingRight">24.0dip</item>
+            <item name="android:paddingBottom">12.0dip</item>
+        </style>    
+        <style name="Widget.Button.Blue" parent="@style/Widget.Button">
+            <item name="android:background">@drawable/button_blue</item></style>
+            
+        <style name="Widget.Button.Green" parent="@style/Widget.Button">
+            <item name="android:background">@drawable/button_green</item>
+        </style>
+        <style name="RoundedRect"><item name="android:background">@drawable/rounded_rectangle</item></style>
+        <style name="RoundedWhiteRect"><item name="android:background">@drawable/rounded_white_rectangle</item></style>
+        <style name="RoundedWhiteRect_2">
+            <item name="android:background">@drawable/rounded_white_rectangle_2</item>
+        </style>
+        
+        <style name="form_edit_text" parent="style/TextAppearance">
+            <item name="android:textSize">18.0sp</item>
+            <item name="android:textColor">#ff464646</item>
+            <item name="android:background">@drawable/form_edit_text_bg</item>
+            <item name="android:padding">5.0sp</item>
+            <item name="android:textCursorDrawable">@drawable/cursor</item>
+        </style>
+        
 </resources>
