@@ -16,6 +16,11 @@
     <string name="new_pin">New PIN</string>
     <string name="confirm_pin">Confirm PIN</string>
     <string name="act_deact_app">Activate/Deactivate App</string>
+    <string name="act_or_deact">Activate | Deactivate</string>
+    <string name="activated">Activated</string>
+    <string name="deactivated">Deactivated</string>
+    <string name="btn_activate">Activate</string>
+    <string name="btn_deactivate">Deactivate</string>
     <string name="choose_sec_opts">Choose Security Options</string>
     <string name="backup">Backup Data (on Cloud)</string>
     <string name="wipe">Wipe Data</string>

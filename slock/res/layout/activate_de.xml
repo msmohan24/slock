@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:background="#323232" >
     <ScrollView android:padding="24.0dip"
          android:layout_width="fill_parent"
          android:layout_height="0.0dip"
@@ -26,7 +27,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
-                android:text="Activate | Deactivate" />
+                android:text="@string/act_or_deact" />
 
             <View android:background="#ff777777"
                  android:layout_width="fill_parent" 
@@ -39,7 +40,7 @@
                  android:layout_width="wrap_content" 
                  android:layout_height="wrap_content" 
                  android:layout_marginTop="16.0dip" 
-                 android:text="Activated" 
+                 android:text="@string/deactivated"
                  style="@+style/MenuItemSettingsText" />
             <View android:id="@+id/separator_name"
                  android:background="#ff777777" 
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_white_rectangle"
-            android:text="Cancel" />
+            android:text="@string/btn_cancel" />
         
         <Button
             android:id="@+id/btnActivate"
@@ -68,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10.0dip"
             android:background="@drawable/round_rect_blue"
-            android:text="Activate" />
+            android:text="@string/btn_activate" />
 
     </LinearLayout>
 </LinearLayout>

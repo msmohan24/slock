@@ -21,22 +21,26 @@ public class OnBootReceiver extends BroadcastReceiver
   {
     if ("android.intent.action.BOOT_COMPLETED".equals(paramIntent.getAction()))
     {
-      Log.d("VogueTools", "Got the Boot Event>>>");
       TelephonyManager localTelephonyManager = (TelephonyManager)paramContext.getSystemService("phone");
+      
+      //TelephonyManager local2TelephonyManager = (TelephonyManager)paramContext.getSystemService(Context.TELEPHONY_SERVICE)
+      //String num1=localTelephonyManager.getLine1Number();
+      
       SharedPreferences localSharedPreferences = paramContext.getSharedPreferences("file", 0);
-      String str1 = localSharedPreferences.getString("pmob", "");
-      String str2 = localSharedPreferences.getString("smob", "");
-      //localSharedPreferences.getString("deact", "");
-      String str3 = "*sLOCK* Android Mobile of IMEI NO: " + localTelephonyManager.getDeviceId() + " is currently using the SIM card service provider:" + localTelephonyManager.getSimOperatorName();
-      String str4 = localSharedPreferences.getString("simno", "");
-      String str5 = localSharedPreferences.getString("deact", "");
-      String str6 = ((TelephonyManager)paramContext.getSystemService("phone")).getSimSerialNumber();
-      if ((str1.length() == 0) || (str5.equalsIgnoreCase("YES")))
+      String primmob = localSharedPreferences.getString("pmob", "");
+      String secmob = localSharedPreferences.getString("smob", "");
+      String msgcontent = "*sLOCK* Android Mobile of IMEI NO: " + localTelephonyManager.getDeviceId() + " is currently using the SIM card service provider:" + localTelephonyManager.getSimOperatorName();
+      String simnum = localSharedPreferences.getString("simno", "");
+      String deactstatus = localSharedPreferences.getString("deact", "");
+      String crtsimnum = ((TelephonyManager)paramContext.getSystemService("phone")).getSimSerialNumber();
+      //String crtsimnum = localTelephonyManager.getSimSerialNumber();
+      
+      if ((primmob.length() == 0) || (deactstatus.equalsIgnoreCase("YES")))
         System.exit(0);
-      if ((!str4.equals(str6)) && (str5.equalsIgnoreCase("NO")))
+      if ((!simnum.equals(crtsimnum)) && (deactstatus.equalsIgnoreCase("NO")))
       {
-        sendSMS(str1, str3, paramContext);
-        sendSMS(str2, str3, paramContext);
+        //sendSMS(primmob, msgcontent, paramContext);
+        sendSMS(secmob, msgcontent, paramContext);
       }
     }
     else
