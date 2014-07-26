@@ -75,25 +75,29 @@ public class SLOCKMainActivity extends Activity {
 	    	         public void run() { 
 	    	        	 options(); 
 	    	         } 
-	    		  }, 1000);
+	    		  }, 2000);
+
+	    		  // 
+	    		  //SLOCKMainActivity.this.enable_device_admin();
+	    		  //
 	    		  
-		          //SLOCKMainActivity.this.options();
-		          options();
-		          return;
-		        }
-		        Toast.makeText(SLOCKMainActivity.this, "Enter same PIN in both fields of length 4-6", 1).show();
-		        pin.setText("");
-		        rePin.setText("");
-		        pin.requestFocus();
-		        
-		    	  if (!get_device_admin_status())
+	    		  /*if (!get_device_admin_status())
 		  	      {
 		    		  AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
 		    		  localBuilder.setMessage("Uninstall Protection is NOT Active. Please Activate!");
 		    		  localBuilder.setTitle("Alert");
 		    		  localBuilder.setNeutralButton("OK", null);
 		    		  localBuilder.show();
-		  	      }
+		  	      }*/
+	    		  
+		        }
+		        else
+		        {		        
+		        	Toast.makeText(SLOCKMainActivity.this, "Enter same PIN in both fields of length 4-6", 1).show();
+		        	pin.setText("");
+		        	rePin.setText("");
+		        	pin.requestFocus();
+		        } 
 		      }
 		    });
 		}
@@ -105,17 +109,6 @@ public class SLOCKMainActivity extends Activity {
 		btnLogin = (Button)findViewById(0x7f090023);
 		forgotPin = (TextView)findViewById(0x7f090022);
 		
-		SharedPreferences localSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
-  	  	boolean activstatus = localSharedPreferences.getString("activ", "").equalsIgnoreCase("NO");
-	    if (activstatus)
-	    {
-	    	AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-	    	localBuilder.setMessage("SIM change detection is NOT Active. Please Activate!");
-	    	localBuilder.setTitle("Alert");
-	    	localBuilder.setNeutralButton("OK", null);
-	    	localBuilder.show();
-	    }
-	    	
 	    btnLogin.setOnClickListener(new View.OnClickListener()
 	    {
 	      public void onClick(View view)
@@ -131,12 +124,23 @@ public class SLOCKMainActivity extends Activity {
 	    		  //Toast.makeText(SLOCKMainActivity.this, "Login Success", 1).show();
 	    		  //SLOCKMainActivity.this.options();
 	    		  options();
+	    		  
+	    		  	SharedPreferences localSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
+	    	  	  	boolean activstatus = localSharedPreferences.getString("activ", "").equalsIgnoreCase("NO");
+	    		    if (activstatus)
+	    		    {
+	    		    	AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
+	    		    	localBuilder.setMessage("SIM change detection is NOT Active. Please Activate!");
+	    		    	localBuilder.setTitle("Alert");
+	    		    	localBuilder.setNeutralButton("OK", null);
+	    		    	localBuilder.show();
+	    		    }
 	    	  }
 	    	  else
 	    	  {
 	    		  loginPin.setText("");
 	    		  Toast.makeText(SLOCKMainActivity.this, "Incorrect PIN", 1).show();
-	    		  return;
+	    		  return; // comes out of method, code below return is not executed.
 	    	  }
 	      	}
 	    	});
@@ -260,9 +264,8 @@ public class SLOCKMainActivity extends Activity {
 		    	         public void run() { 
 		    	        	 options(); 
 		    	         } 
-		    		  }, 1000);
+		    		  }, 2000);
 		    		  
-	    			  options();
 	    		  }
 	    	  });
 
@@ -287,7 +290,6 @@ public class SLOCKMainActivity extends Activity {
 		    	  confirmPin = (EditText)findViewById(0x7f090013);
 		    	  btnSavePin = (Button)findViewById(0x7f090015);
 		    	  btnCancelPin = (Button)findViewById(0x7f090014);
-		    	  
 		    	  btnSavePin.setOnClickListener(new View.OnClickListener()
 				    {
 				      public void onClick(View view)
@@ -295,6 +297,10 @@ public class SLOCKMainActivity extends Activity {
 				    	  String oldpin = oldPin.getText().toString();
 				    	  String newpin = newPin.getText().toString();
 				    	  String confirmpin = confirmPin.getText().toString();
+				    	  
+				    	  SharedPreferences localSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
+				    	  String storedpin = localSharedPreferences.getString("pin", "");
+				    	  
 				    	  if ((oldpin.trim().length() == 0) || (newpin.trim().length() == 0) || (confirmpin.trim().length() == 0))
 				    	  {
 				    		  Toast.makeText(SLOCKMainActivity.this, "Please enter the fields to change PIN", 1).show();
@@ -302,34 +308,33 @@ public class SLOCKMainActivity extends Activity {
 				    		  newPin.setText("");
 				    		  confirmPin.setText("");
 				    	  }
-				    	  SharedPreferences localSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
-				    	  String storedpin = localSharedPreferences.getString("pin", "");
-				    	  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-				    	  if ((oldpin.equals(storedpin)) && !(newpin.equals(storedpin)) && (newpin.equals(confirmpin)))
+				    	  else if ((oldpin.equals(storedpin)) && !(newpin.equals(storedpin)) && (newpin.equals(confirmpin)))
 				    	  {
+				    		  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
 				    		  localEditor.putString("pin", newpin);
 				    		  localEditor.commit();
 				    		  oldPin.setText("");
 				    		  newPin.setText("");
 				    		  confirmPin.setText("");
 				    		  Toast.makeText(SLOCKMainActivity.this, "New PIN is set", 1).show();
-				    		  return;
+
+				    		  Handler handler = new Handler(); 
+				    		  handler.postDelayed(new Runnable() { 
+				    	         public void run() { 
+				    	        	 options(); 
+				    	         } 
+				    		  }, 2000);
+
 				    	  }
-				    	  oldPin.setText("");
-				    	  newPin.setText("");
-				    	  confirmPin.setText("");
-				    	  Toast.makeText(SLOCKMainActivity.this, "PIN is not changed. Please enter correct details.", 1).show();
-				    	
-				    	  Handler handler = new Handler(); 
-			    		  handler.postDelayed(new Runnable() { 
-			    	         public void run() { 
-			    	        	 options(); 
-			    	         } 
-			    		  }, 1000);
-			    		  
-				    	  options();
-				      	}
-				    	});
+				    	  else {
+				    		  oldPin.setText("");
+				    		  newPin.setText("");
+				    		  confirmPin.setText("");
+				    		  Toast.makeText(SLOCKMainActivity.this, "PIN is not changed. Please enter correct details.", 1).show();
+				    	  }
+
+				      }
+				    });
 
 		    	  btnCancelPin.setOnClickListener(new View.OnClickListener()
 				    {
@@ -480,7 +485,6 @@ public class SLOCKMainActivity extends Activity {
 
 				    		  lblActivate.setText("Deactivated");
 					    	  btnActivate.setText("Activate");
-					    	  //return
 				  	      }
 				    	  else {
 				    		  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();

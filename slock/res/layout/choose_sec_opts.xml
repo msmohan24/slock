@@ -35,12 +35,13 @@
                  android:layout_marginBottom="10.0sp" />
             
             <TextView android:textColor="#0ce822"
-                 android:layout_gravity="left"
+                 android:gravity="left | center"
                  android:id="@+id/lblBackup" 
-                 android:layout_width="wrap_content" 
+                 android:layout_width="fill_parent" 
                  android:layout_height="wrap_content" 
                  android:layout_marginTop="16.0dip" 
-                 android:text="@string/backup" 
+                 android:text="@string/backup"
+                 android:drawableRight="@drawable/go_arrow" 
                  style="@+style/MenuItemSettingsText" />
             <View android:id="@+id/separator1"
                  android:background="#ff777777" 
@@ -48,12 +49,13 @@
                  android:layout_height="0.5dip" />
             
             <TextView android:textColor="#0ce822"
-                 android:layout_gravity="left" 
+                 android:gravity="left|center" 
                  android:id="@+id/lblWipe" 
-                 android:layout_width="wrap_content" 
+                 android:layout_width="fill_parent" 
                  android:layout_height="wrap_content" 
                  android:layout_marginTop="16.0dip" 
-                 android:text="@string/wipe" 
+                 android:text="@string/wipe"
+                 android:drawableRight="@drawable/go_arrow" 
                  style="@+style/MenuItemSettingsText" />
             <View android:id="@+id/separator2"
                  android:background="#ff777777" 
@@ -61,12 +63,13 @@
                  android:layout_height="0.5dip" />
             
             <TextView android:textColor="#0ce822"
-                 android:layout_gravity="left" 
+                 android:gravity="left|center" 
                  android:id="@+id/lblLock" 
-                 android:layout_width="wrap_content" 
+                 android:layout_width="fill_parent" 
                  android:layout_height="wrap_content" 
                  android:layout_marginTop="16.0dip" 
                  android:text="@string/lock" 
+                 android:drawableRight="@drawable/go_arrow"
                  style="@+style/MenuItemSettingsText" />
             <View android:id="@+id/separator3"
                  android:background="#ff777777" 
