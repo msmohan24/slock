@@ -9,7 +9,7 @@
 
         <LinearLayout
             android:id="@+id/activate_de_form"
-            style="@+style/RoundedWhiteRect_3"
+            style="@+style/RoundedWhiteRect"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -40,10 +40,9 @@
                  android:layout_width="wrap_content" 
                  android:layout_height="wrap_content" 
                  android:layout_marginTop="16.0dip" 
-                 android:text="@string/deactivated"
+                 android:text="@string/activated"
                  style="@+style/MenuItemSettingsText" />
-            <View android:id="@+id/separator_name"
-                 android:background="#ff777777" 
+            <View android:background="#ff777777" 
                  android:layout_width="fill_parent" 
                  android:layout_height="1.0dip" />
         </LinearLayout>
@@ -69,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10.0dip"
             android:background="@drawable/round_rect_blue"
-            android:text="@string/btn_activate" />
+            android:text="@string/btn_deactivate" />
 
     </LinearLayout>
 </LinearLayout>

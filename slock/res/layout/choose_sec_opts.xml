@@ -9,7 +9,7 @@
 
         <LinearLayout
             android:id="@+id/choose_sec_opts_form"
-            style="@+style/RoundedWhiteRect_3"
+            style="@+style/RoundedWhiteRect"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -21,7 +21,6 @@
             android:paddingLeft="15.0dip"
             android:paddingRight="15.0dip"
             android:paddingTop="45.0dip" >
-             
             <TextView
                 style="@+style/form_header"
                 android:layout_width="fill_parent"
@@ -33,46 +32,37 @@
                  android:layout_width="fill_parent" 
                  android:layout_height="1.0dip" 
                  android:layout_marginBottom="10.0sp" />
-            
-            <TextView android:textColor="#0ce822"
-                 android:gravity="left | center"
-                 android:id="@+id/lblBackup" 
-                 android:layout_width="fill_parent" 
-                 android:layout_height="wrap_content" 
-                 android:layout_marginTop="16.0dip" 
-                 android:text="@string/backup"
-                 android:drawableRight="@drawable/go_arrow" 
-                 style="@+style/MenuItemSettingsText" />
-            <View android:id="@+id/separator1"
-                 android:background="#ff777777" 
+            <CheckBox android:textColor="#0ce822"
+    			android:id="@+id/chkBackup"
+    			android:gravity="left|center"
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+				android:layout_marginTop="16.0dip" 
+				android:text="@string/backup"
+				style="@+style/MenuItemSettingsText" />
+            <View android:background="#ff777777" 
                  android:layout_width="fill_parent" 
                  android:layout_height="0.5dip" />
-            
-            <TextView android:textColor="#0ce822"
-                 android:gravity="left|center" 
-                 android:id="@+id/lblWipe" 
-                 android:layout_width="fill_parent" 
-                 android:layout_height="wrap_content" 
-                 android:layout_marginTop="16.0dip" 
-                 android:text="@string/wipe"
-                 android:drawableRight="@drawable/go_arrow" 
-                 style="@+style/MenuItemSettingsText" />
-            <View android:id="@+id/separator2"
-                 android:background="#ff777777" 
+            <CheckBox android:textColor="#0ce822"
+    			android:id="@+id/chkWipe"
+    			android:gravity="left|center"
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+				android:layout_marginTop="16.0dip" 
+				android:text="@string/wipe"
+				style="@+style/MenuItemSettingsText" />
+            <View android:background="#ff777777" 
                  android:layout_width="fill_parent" 
                  android:layout_height="0.5dip" />
-            
-            <TextView android:textColor="#0ce822"
-                 android:gravity="left|center" 
-                 android:id="@+id/lblLock" 
-                 android:layout_width="fill_parent" 
-                 android:layout_height="wrap_content" 
-                 android:layout_marginTop="16.0dip" 
-                 android:text="@string/lock" 
-                 android:drawableRight="@drawable/go_arrow"
-                 style="@+style/MenuItemSettingsText" />
-            <View android:id="@+id/separator3"
-                 android:background="#ff777777" 
+            <CheckBox android:textColor="#0ce822"
+    			android:id="@+id/chkLock"
+    			android:gravity="left|center"
+    			android:layout_width="fill_parent"
+    			android:layout_height="wrap_content"
+				android:layout_marginTop="16.0dip" 
+				android:text="@string/lock"
+				style="@+style/MenuItemSettingsText" />
+            <View android:background="#ff777777" 
                  android:layout_width="fill_parent" 
                  android:layout_height="0.5dip" />
         </LinearLayout>
@@ -82,7 +72,6 @@
          android:padding="6.0dip" 
          android:layout_width="fill_parent" 
          android:layout_height="wrap_content">
-
         <Button
             android:id="@+id/btnCancelOpts"
             style="@+style/cancel_button"
@@ -90,7 +79,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_white_rectangle"
             android:text="@string/btn_cancel" />
-        
         <Button
             android:id="@+id/btnSaveOpts"
             style="@+style/save_button"
@@ -99,6 +87,5 @@
             android:layout_marginLeft="10.0dip"
             android:background="@drawable/round_rect_blue"
             android:text="@string/btn_save" />
-
     </LinearLayout>
 </LinearLayout>

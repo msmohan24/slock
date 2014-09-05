@@ -24,9 +24,7 @@
                     android:layout_weight="1" android:maxLength="6" android:inputType="numberPassword" />
             </LinearLayout>
 
-            <View
-                android:id="@+id/separator"
-                android:layout_width="fill_parent"
+            <View android:layout_width="fill_parent"
                 android:layout_height="1.0dip"
                 android:layout_marginTop="-5.0dip"
                 android:background="#ffe6e6e6" />
@@ -39,9 +37,7 @@
                     android:layout_weight="1" android:maxLength="6" android:inputType="numberPassword" />
             </LinearLayout>
 
-            <View
-                android:id="@+id/separator"
-                android:layout_width="fill_parent"
+            <View android:layout_width="fill_parent"
                 android:layout_height="1.0dip"
                 android:layout_marginTop="-5.0dip"
                 android:background="#ffe6e6e6" />

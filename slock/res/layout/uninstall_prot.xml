@@ -9,7 +9,7 @@
 
         <LinearLayout
             android:id="@+id/uninstall_prot_form"
-            style="@+style/RoundedWhiteRect_3"
+            style="@+style/RoundedWhiteRect"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -42,8 +42,7 @@
                  android:layout_marginTop="16.0dip" 
                  android:text="Disabled"
                  style="@+style/MenuItemSettingsText" />
-            <View android:id="@+id/separator_name"
-                 android:background="#ff777777" 
+            <View android:background="#ff777777" 
                  android:layout_width="fill_parent" 
                  android:layout_height="1.0dip" />
         </LinearLayout>

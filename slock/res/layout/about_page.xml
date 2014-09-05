@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true"
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+     android:fillViewport="true"
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:background="#323232" >
     <ScrollView android:orientation="vertical" android:id="@+id/main_section" 
@@ -10,32 +11,43 @@
             android:layout_width="fill_parent" android:layout_height="wrap_content">
             <TextView android:id="@+id/info_title" android:layout_width="fill_parent" 
                 android:layout_height="wrap_content" android:layout_margin="6.0dip" 
-                android:text="info_title" style="wl_token_header" />
+                android:text="info_title" />
             <TextView android:id="@+id/app_version_info" android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" android:layout_margin="6.0dip" 
-                android:text="app_version" android:layout_below="@+id/info_title" 
-                style="wl_token_small" />
+                android:text="app_version" android:layout_below="@+id/info_title" />
             <TextView android:id="@+id/app_version" android:layout_width="fill_parent"
                  android:layout_height="wrap_content" android:layout_margin="6.0dip" 
-                 android:layout_toRightOf="@+id/app_version_info" android:layout_below="@+id/info_title" 
-                 style="wl_token_small" />
+                 android:layout_toRightOf="@+id/app_version_info" android:layout_below="@+id/info_title" />
             <TextView android:id="@+id/app_legal_info" android:layout_width="wrap_content" 
                 android:layout_height="wrap_content" android:layout_margin="6.0dip" 
-                android:text="app_legal_info" android:layout_below="@+id/app_version" 
-                style="wl_token_small" />
+                android:text="app_legal_info" android:layout_below="@+id/app_version" />
             <View android:orientation="vertical" android:id="@+id/dummy_view" 
                 android:layout_width="fill_parent" android:layout_height="50.0sp" />
             <TextView android:id="@+id/app_legal_info_link" android:layout_width="fill_parent" 
                 android:layout_height="wrap_content" android:layout_margin="6.0dip" 
                 android:text="app_legal_info_link" android:layout_below="@+id/app_legal_info" 
-                android:layout_alignLeft="@+id/dummy_view" style="wl_token_small" />
+                android:layout_alignLeft="@+id/dummy_view" />
         </RelativeLayout>
     </ScrollView>
     <LinearLayout android:gravity="center" android:layout_gravity="bottom" android:padding="6.0sp" 
         android:layout_width="fill_parent" android:layout_height="wrap_content" 
         android:layout_alignParentBottom="true">
         <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" 
-            android:layout_margin="6.0dip" android:text="app_copyright_text" 
-            style="wl_token_small" />
+            android:layout_margin="6.0dip" android:text="app_copyright_text" />
     </LinearLayout>
+    
+			<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
+                android:layout_margin="15.0dip" android:layout_gravity="bottom" android:layout_alignParentBottom="true" >
+        		
+        		<!-- android:id="@+id/btnAbtClose" -->
+                <Button
+                    style="@+style/cancel_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+					android:layout_gravity="center_horizontal"
+                    android:text="Back" />
+            </RelativeLayout>
+            
 </RelativeLayout>

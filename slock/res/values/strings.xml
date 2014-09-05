@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">sLOCK</string>
+    <string name="app_name">SLOCK</string>
     <string name="set_pin">Set PIN</string>
     <string name="enter_pin">Enter PIN </string>
     <string name="reenter_pin">ReEnter PIN </string>
@@ -22,7 +22,7 @@
     <string name="btn_activate">Activate</string>
     <string name="btn_deactivate">Deactivate</string>
     <string name="choose_sec_opts">Choose Security Options</string>
-    <string name="backup">Backup Data (on Cloud)</string>
+    <string name="backup">Backup Data</string>
     <string name="wipe">Wipe Data</string>
     <string name="lock">Lock Device</string>
     <string name="dbx_email">Email</string>

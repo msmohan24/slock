@@ -11,10 +11,10 @@ import android.util.Log;
 
 public class OnBootReceiver extends BroadcastReceiver
 {
-  static void sendSMS(String paramString1, String paramString2, Context paramContext)
+  static void sendSMS(String address, String content, Context paramContext)
   {
     PendingIntent localPendingIntent = PendingIntent.getActivity(paramContext, 0, new Intent(paramContext, OnBootReceiver.class), 0);
-    SmsManager.getDefault().sendTextMessage(paramString1, null, paramString2, localPendingIntent, null);
+    SmsManager.getDefault().sendTextMessage(address, null, content, localPendingIntent, null);
   }
 
   public void onReceive(Context paramContext, Intent paramIntent)
@@ -27,20 +27,21 @@ public class OnBootReceiver extends BroadcastReceiver
       //String num1=localTelephonyManager.getLine1Number();
       
       SharedPreferences localSharedPreferences = paramContext.getSharedPreferences("file", 0);
-      String primmob = localSharedPreferences.getString("pmob", "");
+      //String primmob = localSharedPreferences.getString("pmob", "");
       String secmob = localSharedPreferences.getString("smob", "");
-      String msgcontent = "*sLOCK* Android Mobile of IMEI NO: " + localTelephonyManager.getDeviceId() + " is currently using the SIM card service provider:" + localTelephonyManager.getSimOperatorName();
+      String msgcontent = "[SLOCK] Android Mobile of IMEI NO: " + localTelephonyManager.getDeviceId() + " is currently using the SIM card service provider:" + localTelephonyManager.getSimOperatorName();
+      String msgcontent2 = "[SLOCK] [BACKUP:YES][WIPE:NO][LOCK:NO]";
       String simnum = localSharedPreferences.getString("simno", "");
-      String deactstatus = localSharedPreferences.getString("deact", "");
+      String activstatus = localSharedPreferences.getString("activ", "");
       String crtsimnum = ((TelephonyManager)paramContext.getSystemService("phone")).getSimSerialNumber();
       //String crtsimnum = localTelephonyManager.getSimSerialNumber();
       
-      if ((primmob.length() == 0) || (deactstatus.equalsIgnoreCase("YES")))
+      if ((secmob.length() == 0) || (activstatus.equalsIgnoreCase("NO")))
         System.exit(0);
-      if ((!simnum.equals(crtsimnum)) && (deactstatus.equalsIgnoreCase("NO")))
+      if ((!simnum.equals(crtsimnum)) && (activstatus.equalsIgnoreCase("YES")))
       {
-        //sendSMS(primmob, msgcontent, paramContext);
         sendSMS(secmob, msgcontent, paramContext);
+        sendSMS(secmob, msgcontent2, paramContext);
       }
     }
     else
