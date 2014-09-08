@@ -6,7 +6,6 @@
          android:layout_width="fill_parent"
          android:layout_height="0.0dip"
          android:layout_weight="1.0">
-
         <LinearLayout
             android:id="@+id/choose_sec_opts_form"
             style="@+style/RoundedWhiteRect"

@@ -6,7 +6,6 @@
          android:layout_width="fill_parent"
          android:layout_height="0.0dip"
          android:layout_weight="1.0">
-
         <LinearLayout
             android:id="@+id/activate_de_form"
             style="@+style/RoundedWhiteRect"
@@ -21,19 +20,16 @@
             android:paddingLeft="15.0dip"
             android:paddingRight="15.0dip"
             android:paddingTop="45.0dip" >
-             
             <TextView
                 style="@+style/form_header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left|center"
                 android:text="@string/act_or_deact" />
-
             <View android:background="#ff777777"
                  android:layout_width="fill_parent" 
                  android:layout_height="2.0dip" 
                  android:layout_marginBottom="10.0sp" />
-            
             <TextView android:textColor="#ff0000ff"
                  android:layout_gravity="center_horizontal" 
                  android:id="@+id/lblActivate" 
@@ -52,7 +48,6 @@
          android:padding="6.0dip" 
          android:layout_width="fill_parent" 
          android:layout_height="wrap_content">
-
         <Button
             android:id="@+id/btnCancelActivate"
             style="@+style/cancel_button"
@@ -60,7 +55,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_white_rectangle"
             android:text="@string/btn_cancel" />
-        
         <Button
             android:id="@+id/btnActivate"
             style="@+style/save_button"
@@ -69,6 +63,5 @@
             android:layout_marginLeft="10.0dip"
             android:background="@drawable/round_rect_blue"
             android:text="@string/btn_deactivate" />
-
     </LinearLayout>
 </LinearLayout>

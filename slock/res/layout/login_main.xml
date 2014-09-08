@@ -5,7 +5,6 @@
   android:background="#323232" >
     <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" 
         android:layout_alignParentLeft="true" android:layout_centerVertical="true">
-
         <LinearLayout
             android:id="@+id/login_main"
             style="@+style/RoundedWhiteRect_2"
@@ -23,19 +22,16 @@
                     android:layout_height="40.0dip" android:hint="@string/enter_pin" 
                     android:layout_weight="1" android:maxLength="6" android:inputType="numberPassword" />
             </LinearLayout>
-
             <View android:layout_width="fill_parent"
                 android:layout_height="1.0dip"
                 android:layout_marginTop="-5.0dip"
                 android:background="#ffe6e6e6" />
-
             <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
                 android:layout_margin="15.0dip">
                 <TextView android:textColor="#ff085990" android:gravity="left" android:id="@+id/forgotPin" 
                     android:layout_width="wrap_content" android:layout_height="wrap_content" 
                     android:text="@string/forgot_pin" android:layout_alignBaseline="@+id/btnLogin" 
                     android:layout_alignBottom="@+id/btnLogin" android:layout_alignParentLeft="true" />
-
                 <Button
                     android:id="@+id/btnLogin"
                     style="@+style/save_button"
@@ -46,7 +42,6 @@
                     android:background="@drawable/round_rect_blue"
 					android:layout_gravity="center_horizontal"
                     android:text="@string/btn_login" />
-
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

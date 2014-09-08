@@ -11,14 +11,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.*;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
@@ -42,14 +38,9 @@ public class SLOCKMainActivity extends Activity {
 		this.setAdminComponent(new ComponentName(this, DAR.class));
 	    SLOCKMainActivity.devicePolicyManager = ((DevicePolicyManager)getSystemService("device_policy"));
 	    
-	    /*this.devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE); 
-	    this.adminComponent = new ComponentName(this, DAR.class); 
+	    //this.devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE); 
+	    //this.adminComponent = new ComponentName(this, DAR.class); 
  
-	    Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-	    boolean isAdmin = devicePolicyManager.isAdminActive(adminComponent);
-	    if (isAdmin) 
-	    	devicePolicyManager.lockNow();*/ 
-	    
 	    if (getSharedPreferences("file", 0).getString("pin", "").length() == 0)
 	    {
 	      setpin();
@@ -87,22 +78,6 @@ public class SLOCKMainActivity extends Activity {
 	    		  localEditor1.putString("activ", "YES");
 	    		  localEditor1.commit();
 	    		  
-	    		  /*if (get_device_admin_status())
-		  	      {
-		    		  AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-		    		  localBuilder.setMessage("Application is Activated. Uninstall Protection is Enabled.");
-		    		  localBuilder.setTitle("Alert");
-		    		  localBuilder.setNeutralButton("OK", null);
-		    		  localBuilder.show();
-		  	      }
-	    		  else {
-	    			  AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-		    		  localBuilder.setMessage("Application is Activated. Please Enable Uninstall Protection.");
-		    		  localBuilder.setTitle("Alert");
-		    		  localBuilder.setNeutralButton("OK", null);
-		    		  localBuilder.show();
-	    		  }*/
-	    		  
 		        }
 		        else
 		        {		        
@@ -114,14 +89,15 @@ public class SLOCKMainActivity extends Activity {
 		      }
 		    });
 		}
-	
+
+	int invalidLoginCount = 0;
 	private void login() {
 		setContentView(0x7f030004);
 		//setContentView(R.layout.login_main);
 		loginPin = (EditText)findViewById(0x7f09001b);
 		btnLogin = (Button)findViewById(0x7f09001d);
 		forgotPin = (TextView)findViewById(0x7f09001c);
-		
+
 	    btnLogin.setOnClickListener(new View.OnClickListener()
 	    {
 	      public void onClick(View view)
@@ -135,32 +111,28 @@ public class SLOCKMainActivity extends Activity {
 	    	  else if (SLOCKMainActivity.this.getSharedPreferences("file", 0).getString("pin", "").equals(logPin))
 	    	  {
 	    		  options();
-	    		  
-	    		  	/*SharedPreferences localSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
-	    	  	  	boolean activstatus = localSharedPreferences.getString("activ", "").equalsIgnoreCase("NO");
-	    		    if(activstatus)
-	    		    {
-	    		    	AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-	    		    	localBuilder.setMessage("Please Activate the App for SIM change detection.");
-	    		    	localBuilder.setTitle("Alert");
-	    		    	localBuilder.setNeutralButton("OK", null);
-	    		    	localBuilder.show();
-	    		    }
-	    		    if(!get_device_admin_status())
-	    		    {
-	    		    	AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-	    		    	localBuilder.setMessage("Please Enable Uninstall Protection.");
-	    		    	localBuilder.setTitle("Alert");
-	    		    	localBuilder.setNeutralButton("OK", null);
-	    		    	localBuilder.show();
-	    		    }*/
-	    		  
 	    	  }
 	    	  else
 	    	  {
 	    		  loginPin.setText("");
 	    		  Toast.makeText(SLOCKMainActivity.this, "Incorrect PIN", 1).show();
-	    		  //return; // comes out of method, code below return is not executed.
+	    		  
+	    		  invalidLoginCount += 1;
+	    		  final String password = "sLOCK";
+	    		  if (invalidLoginCount == 4 ) {
+	    			  
+	    			  /*Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+	    			  boolean isAdmin = devicePolicyManager.isAdminActive(adminComponent);
+	    			  if (isAdmin) 
+	    				  devicePolicyManager.lockNow();*/
+	    			    
+	    			  devicePolicyManager.lockNow();
+	    			  
+	    			  SLOCKMainActivity.sendSMS(SLOCKMainActivity.this.getSharedPreferences("file", 0).getString("smob", ""), 
+	    					  "[SLOCK] Locked device with password: " + password, SLOCKMainActivity.this.getBaseContext());
+	    			  
+	    			  System.exit(0);
+	    		  }
 	    	  }
 	      	}
 	    	});
@@ -169,10 +141,10 @@ public class SLOCKMainActivity extends Activity {
 	    {
 	    	public void onClick(View view)
 	    	{
-	    		String prim = getSharedPreferences("file", 0).getString("pmob", "");
+	    		final String prim = getSharedPreferences("file", 0).getString("pmob", "");
 	    		String secon = getSharedPreferences("file", 0).getString("smob", "");
-	    		if (prim.equals("") || secon.equals(""))
-		    	Toast.makeText(SLOCKMainActivity.this, "Mobile numbers not stored inside the App.\nCannot send PIN", 1).show();
+	    		if (secon.equals(""))
+		    	Toast.makeText(SLOCKMainActivity.this, "Secondary Mobile number is not stored inside the App. Cannot send PIN.", 1).show();
 	    		else
 		    		{
 	    			AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
@@ -186,7 +158,7 @@ public class SLOCKMainActivity extends Activity {
 	    					
 	    					SLOCKMainActivity.sendSMS(secon, "[SLOCK] Your PIN is: " + spin, 
 	    							SLOCKMainActivity.this.getBaseContext());
-	    					// clear from message db
+
 	    					Toast.makeText(SLOCKMainActivity.this.getApplicationContext(), 
 	    							"PIN sent to your Secondary Mobile.\nYou will receive SMS shortly.", 0).show();
 		    		}
@@ -227,47 +199,19 @@ public class SLOCKMainActivity extends Activity {
 	    	  //primMobile.setText(localSharedPreferences.getString("pmob", ""));
 	    	  secMobile.setText(localSharedPreferences.getString("smob", ""));
 	    	  
-	    	  // first time get no, display and store it
-	    	  //second time compare with stored no, if app is NOT active - display; and then store new no 
-	    	  																// when app becomes active
-	    	  	// if app is active - send SMS
-	    	  
-	    	  //OLD -- is app is NOT active should do this, else simply display what is stored already
-	    	  
 	    	  TelephonyManager localTelephonyManager = (TelephonyManager) SLOCKMainActivity.this.getSystemService(Context.TELEPHONY_SERVICE); 
-	    	  //(TelephonyManager)SLOCKMainActivity.this.getSystemService("phone");
+	    	  		//(TelephonyManager)SLOCKMainActivity.this.getSystemService("phone");
 
 	    	  final String sim1 = localTelephonyManager.getLine1Number();
 	    	  primMobile.setText(sim1);
 	    	  primMobile.setEnabled(false);
-	    	  
-	    	  /*try {
-		    	  final String sim1 = localTelephonyManager.getSubscriberId();
-				  primMobile.setText(sim1);
-				  primMobile.setEnabled(false);
-		    	}catch(Exception e) {}*/
-
-			  /*
-	    	   *may add contact icon here
-	     
-	     		primary.setOnClickListener(new View.OnClickListener()
-	    		{
-	      			public void onClick(View view)
-	      			{
-	      				Intent conIntent = new Intent("android.intent.action.GET_CONTENT");
-	      				conIntent.setType("vnd.android.cursor.item/phone_v2");
-	      				SLOCKMainActivity.this.startActivityForResult(conIntent, 1);
-		      		}
-		    	});
-	     
-	    	   */
 
 	    	  btnSaveMobile.setOnClickListener(new View.OnClickListener()
 	    	  {
 	    		  public void onClick(View view)
 	    		  {
 	    			  TelephonyManager localTelephonyManager = (TelephonyManager)SLOCKMainActivity.this.getSystemService("phone");
-	    			  //getSystemService(Context.TELEPHONY_SERVICE)
+	    			  		//getSystemService(Context.TELEPHONY_SERVICE)
 	    			  
 	    			  String simSN = localTelephonyManager.getSimSerialNumber();
 	    			  String pmobile = primMobile.getText().toString();
@@ -285,19 +229,19 @@ public class SLOCKMainActivity extends Activity {
 	    			  localEditor.putString("pmob", sim1);
 	    			  localEditor.putString("smob", smobile);
 	    			  localEditor.putString("simno", simSN);
+	    			  
 	    			  localEditor.commit();
 	    			  Toast.makeText(SLOCKMainActivity.this, "Secondary Mobile number is saved.", 1).show();
 	    			  
-	    			  /*store first time and use it to verify when smob changes
-	    			  localEditor.putString("smob0", smobile);
-	    			  
+	    			  //store first time and use it to verify when smob changes
 	    			  SharedPreferences localSharedPreferences = getSharedPreferences("file", 0);
-	    			  if (localSharedPreferences.getString("smob0", "") != localSharedPreferences.getString("smob", "")) {
-	    				  SLOCKMainActivity.sendSMS(smobile, "[SLOCK][BACKUP:YES][WIPE:NO][LOCK:NO]", SLOCKMainActivity.this.getBaseContext());  
-	    			  }*/
+	    			  if (localSharedPreferences.getString("smob", "") != smobile) {
+	    				  SLOCKMainActivity.sendSMS(localSharedPreferences.getString("smob", ""), "Secondary Mobile is "
+	    				  		+ "changed from " + localSharedPreferences.getString("smob", "") + "to " + smobile,
+	    				  		SLOCKMainActivity.this.getBaseContext());  
+	    			  }
 
-	    			  //SLOCKMainActivity.sendSMS(smobile, "[SLOCK][BACKUP:YES][WIPE:NO][LOCK:NO]", SLOCKMainActivity.this.getBaseContext());
-	    			  
+
 	    			  Handler handler = new Handler(); 
 		    		  handler.postDelayed(new Runnable() { 
 		    	         public void run() { 
@@ -401,25 +345,8 @@ public class SLOCKMainActivity extends Activity {
 		    	  chkLock = (CheckBox)findViewById(0x7f090017);
 		    	  btnSaveOpts = (Button)findViewById(0x7f090019);
 		    	  btnCancelOpts = (Button)findViewById(0x7f090018);
-		  		
-		    	  // checkbox enabled/disabled while loading the page - store in pref, retrieve and set
-		    	  
-		    	  /*chkBackup.setOnClickListener(new View.OnClickListener()
-		    	  {
-				      public void onClick(View view)
-				      {
-				    	  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-			    		  localEditor.putString("backup_enabled", "YES");
-			    		  localEditor.commit();
-			    		  
-				    	  	//Intent dbxActivity = new Intent(SLOCKMainActivity.this,DropboxActivity.class);
-				    	  Intent dbxActivity = new Intent(SLOCKMainActivity.this,BackupToDropboxActivity.class);
-				    	  dbxActivity.putExtra("fromReceiver", SMSReceiver.address);
-				    	  startActivity(dbxActivity);
-				      }
-				    });*/
 
-		    	  SharedPreferences backupSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
+		    	  //SharedPreferences backupSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
 		    	  //boolean isBackupEnabled = backupSharedPreferences.getString("backup_enabled", "").equalsIgnoreCase("YES");
 		    	  boolean isBackupEnabled = pref.getBoolean("backup_enabled", false);
 		    	  chkBackup.setChecked(isBackupEnabled);
@@ -427,142 +354,77 @@ public class SLOCKMainActivity extends Activity {
 		    	  chkBackup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 					@Override
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
-						//if (buttonView.isChecked()) {
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 						if (chkBackup.isChecked()) {
 							//SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-							SharedPreferences.Editor localEditor = pref.edit();
 							//localEditor.putString("backup_enabled", "YES");
 							//localEditor.commit();
+
+							SharedPreferences.Editor localEditor = pref.edit();
 							localEditor.putBoolean("backup_enabled", true).commit();
 							
-							//Intent dbxActivity = new Intent(SLOCKMainActivity.this,DropboxActivity.class);
 							Intent dbxActivity = new Intent(SLOCKMainActivity.this,BackupToDropboxActivity.class);
 							dbxActivity.putExtra("fromReceiver", SMSReceiver.address);
 							startActivity(dbxActivity);
 		                }
 		                else {
-		                	//SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-							//localEditor.putString("backup_enabled", "NO");
-							//localEditor.commit();
-							
 							SharedPreferences.Editor localEditor = pref.edit();
 							localEditor.putBoolean("backup_enabled", false).commit();
 							
 		                	// clear keys
 		                	BackupToDropboxActivity dbx = new BackupToDropboxActivity();
 		                	dbx.clearKeys();
+		                    finish();
 		                }	
 					}
 		    	  });
 
-		    	  /*CheckBox yourCheckBox = (CheckBox) findViewById (R.id.yourId);
-
-		    	  yourCheckBox.setOnClickListener(new OnClickListener() {
-
-		    	        @Override
-		    	        public void onClick(View v) {
-		    	                  //is chkIos checked?
-		    	          if (((CheckBox) v).isChecked()) {
-		    	                           //Case 1
-		    	          }
-		    	          else 
-		    	            //case 2
-
-		    	        }
-		    	      });*/
-		    	  
-		    	  /*chkWipe.setOnClickListener(new View.OnClickListener()
-		    	  {
-				      public void onClick(View view)
-				      {
-				    	  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-			    		  localEditor.putString("wipe_enabled", "YES");
-			    		  localEditor.commit();
-			    		  
-			    		  AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-			    		  localBuilder.setMessage("Wipe option is enabled for remote wipe action.");
-			    		  localBuilder.setTitle("Notification");
-			    		  localBuilder.setNeutralButton("Ok", null);
-			    		  localBuilder.show();
-				      }
-		    	  });*/
-		    	  
-		    	  SharedPreferences wipeSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
-		    	  boolean isWipeEnabled = wipeSharedPreferences.getString("wipe_enabled", "").equalsIgnoreCase("YES");
+		    	  boolean isWipeEnabled = pref.getBoolean("wipe_enabled", false);
 		    	  chkWipe.setChecked(isWipeEnabled);
 		    	  
 		    	  chkWipe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 						@Override
-						public void onCheckedChanged(CompoundButton buttonView,
-								boolean isChecked) {
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 							if (chkWipe.isChecked()) {
-								SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-								localEditor.putString("wipe_enabled", "YES");
-								localEditor.commit();
-					    		  
-								AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-								localBuilder.setMessage("Wipe option is enabled for remote wipe action.");
-								localBuilder.setTitle("Notification");
-								localBuilder.setNeutralButton("Ok", null);
-								localBuilder.show();
+								SharedPreferences.Editor localEditor = pref.edit();
+								localEditor.putBoolean("wipe_enabled", true).commit();
 								
-								Intent wipeIntent = new Intent(SLOCKMainActivity.this, WipeDataActivity.class);
-		                        wipeIntent.putExtra("address", SMSReceiver.address);
-		                        //startActivity(wipeIntent);
+								AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
+								localBuilder.setMessage("Wipe option is enabled for remote wipe action. "
+										+ "Remote action will Wipe out Device memory and SD cards.");
+								localBuilder.setTitle("Notification");
+								localBuilder.setNeutralButton("OK", null);
+								localBuilder.show();
 			                }
 			                else {
-									SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-									localEditor.putString("wipe_enabled", "NO");
-									localEditor.commit();
+			                	SharedPreferences.Editor localEditor = pref.edit();
+								localEditor.putBoolean("wipe_enabled", false).commit();
 			                }	
 						}
 			    	  });
 		    	  
-		    	  /*chkLock.setOnClickListener(new View.OnClickListener()
-		    	  {
-				      public void onClick(View view)
-				      {
-				    	  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-			    		  localEditor.putString("lock_enabled", "YES");
-			    		  localEditor.commit();
-			    		  
-				    	  AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-				    	  localBuilder.setMessage("Lock option is enabled for remote lock action.");
-				    	  localBuilder.setTitle("Notification");
-				    	  localBuilder.setNeutralButton("OK", null);
-				    	  localBuilder.show();
-				      }
-		    	  });*/
-		    	  
-		    	  SharedPreferences lockSharedPreferences = SLOCKMainActivity.this.getSharedPreferences("file", 0);
-		    	  boolean isLockEnabled = lockSharedPreferences.getString("lock_enabled", "").equalsIgnoreCase("YES");
+		    	  boolean isLockEnabled = pref.getBoolean("lock_enabled", false);
 		    	  chkLock.setChecked(isLockEnabled);
 		    	  
 		    	  chkLock.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 						@Override
-						public void onCheckedChanged(CompoundButton buttonView,
-								boolean isChecked) {
+						public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 							if (chkLock.isChecked()) {
-								SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-								localEditor.putString("lock_enabled", "YES");
-								localEditor.commit();
-					    		  
+								SharedPreferences.Editor localEditor = pref.edit();
+								localEditor.putBoolean("lock_enabled", true).commit();
+								
 								AlertDialog.Builder localBuilder = new AlertDialog.Builder(SLOCKMainActivity.this);
-								localBuilder.setMessage("Lock option is enabled for remote lock action.");
+								localBuilder.setMessage("Lock option is enabled for remote lock action. "
+										+ "Remote action will Lock out the device.");
 								localBuilder.setTitle("Notification");
 								localBuilder.setNeutralButton("OK", null);
 								localBuilder.show();
-								
-		                        //Utils.lockDevice(SLOCKMainActivity.this);
 			                }
 			                else {
-			                	SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
-								localEditor.putString("lock_enabled", "NO");
-								localEditor.commit();
+			                	SharedPreferences.Editor localEditor = pref.edit();
+								localEditor.putBoolean("lock_enabled", false).commit();
 			                }	
 						}
 			    	  });
@@ -571,7 +433,6 @@ public class SLOCKMainActivity extends Activity {
 				    {
 				      public void onClick(View view)
 				      {
-				    	  //set YES/NO for sms command ?
 				    	  options();
 				      }
 				    });
@@ -613,8 +474,6 @@ public class SLOCKMainActivity extends Activity {
 				    		  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
 				    		  localEditor.putString("activ", "NO");
 				    		  localEditor.commit();
-				    		  Toast.makeText(SLOCKMainActivity.this.getApplicationContext(), 
-				    				  getSharedPreferences("file", 0).getString("activ", ""), 0).show();
 
 				    		  lblActivate.setText("Deactivated");
 					    	  btnActivate.setText("Activate");
@@ -623,8 +482,6 @@ public class SLOCKMainActivity extends Activity {
 				    		  SharedPreferences.Editor localEditor = SLOCKMainActivity.this.getSharedPreferences("file", 0).edit();
 				    		  localEditor.putString("activ", "YES");
 				    		  localEditor.commit();
-				    		  Toast.makeText(SLOCKMainActivity.this.getApplicationContext(),
-				    		  getSharedPreferences("file", 0).getString("activ", ""), 0).show();
 				    	  
 				    		  lblActivate.setText("Activated");
 				    		  btnActivate.setText("Deactivate");
@@ -674,8 +531,6 @@ public class SLOCKMainActivity extends Activity {
 		    			  if (SLOCKMainActivity.this.get_device_admin_status())
 		    			  {
 		    				  SLOCKMainActivity.this.disable_device_admin();
-		    				  Toast.makeText(SLOCKMainActivity.this.getApplicationContext(), 
-		    						  "Deactivated!", 0).show();
 		    				  lblDAEnable.setText("Disabled");
 		    				  btnEnableDA.setText("Enable Protection");
 		    			  }
@@ -684,8 +539,6 @@ public class SLOCKMainActivity extends Activity {
 		    				  SLOCKMainActivity.this.enable_device_admin();
 		    				  lblDAEnable.setText("Enabled");
 		    				  btnEnableDA.setText("Disable Protection");
-		    				  Toast.makeText(SLOCKMainActivity.this.getApplicationContext(), 
-		    						  "Activated!", 0).show();
 		    			  }
 		    			  
 		    			  new Thread(new Runnable() {

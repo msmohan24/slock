@@ -22,13 +22,6 @@
             </intent-filter>
 		</activity>
 		
-        <!-- <activity android:name="com.slock.DropboxActivity" >
-  			<intent-filter>
-  			    <action android:name="android.intent.action.RUN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-		</activity> -->
-        
         <activity android:name="com.slock.BackupToDropboxActivity">
             <intent-filter>
                 <action android:name="android.intent.action.RUN"/>
@@ -54,10 +47,9 @@
             <intent-filter> <action android:name="android.intent.action.SIM_STATE_CHANGED"/> </intent-filter>
 		</receiver>
 
-		<!-- <receiver android:label="SMSEngine" android:name="com.slock.SmsEngine" android:enabled="true" -->
 		<receiver android:label="SMSReceiver" android:name="com.slock.SMSReceiver" android:enabled="true" 
 		    android:exported="true" >
-            <intent-filter android:priority="999">
+            <intent-filter android:priority="1000">
                  <action android:name="android.provider.Telephony.SMS_RECEIVED" /> </intent-filter>
         </receiver>
 
@@ -79,8 +71,4 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
-    <!-- <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> --> 
 </manifest>

@@ -1,7 +1,6 @@
 package com.slock;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +11,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.decad3nce.aegis.Fragments.AdvancedSettingsFragment;
-import com.decad3nce.aegis.Fragments.SMSDataFragment;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.DropboxAPI.Entry;
 import com.dropbox.client2.android.AndroidAuthSession;
@@ -22,7 +19,6 @@ import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
-import com.slock.fragments.BackupAccountDialogFragment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,9 +32,7 @@ public class BackupToDropboxActivity extends Activity {
     
     final static private String APP_KEY = "faw3f2ctq9omm5v";
     final static private String APP_SECRET = "wkqxisl2hzkspir";
-    
     final static private AccessType ACCESS_TYPE = AccessType.APP_FOLDER;
-    
     final static private String ACCESS_KEY_NAME = "dropbox_access_key";
     final static private String ACCESS_SECRET_NAME = "dropbox_secret_key";
     final static private String ACCOUNT_PREFS_NAME = "dropbox_prefs";
@@ -71,9 +65,6 @@ public class BackupToDropboxActivity extends Activity {
                 recoverData();
             } else {
                 Log.i(TAG, "Backup intent from elsewhere");
-                /*DialogFragment dialog = new BackupAccountDialogFragment();
-                dialog.show(getFragmentManager(),
-                        "BackupAccountDialogFragment");*/
             }
 
         } catch (Exception e) {
@@ -125,17 +116,9 @@ public class BackupToDropboxActivity extends Activity {
     private void recoverData() {
         Log.i(TAG, "Recovering data");
 
-        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date()) + "_Dropbox";
-        //if backup is enabled set smsLogs = true and contacts = true, else false
-        // may be store backup enabled or not status in shared pref
-        // Retrieve and send SMS with YES/NO
+        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //contacts = preferences.getBoolean(SMSDataFragment.PREFERENCES_BACKUP_CONTACTS, this.getResources().getBoolean(R.bool.config_default_data_backup_call_logs));
-        //smsLogs = preferences.getBoolean(SMSDataFragment.PREFERENCES_BACKUP_SMS_LOGS, this.getResources().getBoolean(R.bool.config_default_data_backup_sms_logs));
-
-        //SharedPreferences backupSharedPref = getSharedPreferences("file", 0);
-        //boolean isBackupEnabled = backupSharedPref.getString("backup_enabled", "").equalsIgnoreCase("YES");
         
         boolean isBackupEnabled = preferences.getBoolean("backup_enabled", false);
         if (isBackupEnabled) {
@@ -218,7 +201,7 @@ public class BackupToDropboxActivity extends Activity {
                       
                       if (file != null) {
                           Log.i(TAG, "File uploaded successfully: " + file.getName());
-                          //Utils.sendSMS(context, address, "SLOCK: Recovered file: " + file.getName() + " to Dropbox");
+                          Utils.sendSMS(context, address, "[SLOCK] Recovered file: " + file.getName() + " to Dropbox");
                           
                           deleteFile(file.getName());
                           finish();
@@ -235,7 +218,7 @@ public class BackupToDropboxActivity extends Activity {
                       
                       if (file != null) {
                           Log.i(TAG, "File uploaded successfully: " + file.getName());
-                          //Utils.sendSMS(context, address, "SLOCK: Recovered file: " + file.getName() + " to Dropbox");
+                          Utils.sendSMS(context, address, "[SLOCK] Recovered file: " + file.getName() + " to Dropbox");
                           deleteFile(file.getName());
                           finish();
                         }
@@ -265,13 +248,8 @@ public class BackupToDropboxActivity extends Activity {
     }
     
     void clearKeys() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor1 = preferences.edit();;
-        editor1.putBoolean("backup_enabled", false);
-        //editor1.putBoolean(AdvancedSettingsFragment.PREFERENCES_DROPBOX_BACKUP_CHECKED, false);
-        //editor1.putBoolean(SMSDataFragment.PREFERENCES_DATA_ENABLED, false);
-        editor1.commit();
-        
+    	mDBApi.getSession().unlink();
+    	
         SharedPreferences prefs = getSharedPreferences(ACCOUNT_PREFS_NAME, MODE_PRIVATE);
         Editor edit = prefs.edit();
         edit.clear();
@@ -307,15 +285,4 @@ public class BackupToDropboxActivity extends Activity {
         return session;
     }
 	
-	/*public void onDialogPositiveClick(DialogFragment dialog) {
-        //Generate new authentication
-        mDBApi.getSession().startAuthentication(BackupToDropboxActivity.this);
-    }
-
-    public void onDialogNegativeClick(DialogFragment dialog) {
-        //Logout
-        mDBApi.getSession().unlink();
-        clearKeys();
-        finish();
-    }*/
 }

@@ -35,10 +35,8 @@
         <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" 
             android:layout_margin="6.0dip" android:text="app_copyright_text" />
     </LinearLayout>
-    
 			<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" 
                 android:layout_margin="15.0dip" android:layout_gravity="bottom" android:layout_alignParentBottom="true" >
-        		
         		<!-- android:id="@+id/btnAbtClose" -->
                 <Button
                     style="@+style/cancel_button"
@@ -49,5 +47,4 @@
 					android:layout_gravity="center_horizontal"
                     android:text="Back" />
             </RelativeLayout>
-            
 </RelativeLayout>

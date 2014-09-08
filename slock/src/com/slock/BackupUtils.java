@@ -10,15 +10,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class BackupUtils extends Utils {
 
     public static Uri getAllContacts(ContentResolver cr, Uri internal, Context context, String timeStamp) {
 
     	String[] contactsArray = new String[2];
-        //Uri contactsUri = ContactsContract.Contacts.CONTENT_URI;
         Uri contactsUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         
         Cursor cur = cr.query(contactsUri, null, null, null, null);

@@ -1,11 +1,8 @@
 package com.slock;
 
-import android.app.Activity;
-import android.app.admin.DevicePolicyManager;
-import android.content.SharedPreferences;
+ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 
 import java.io.File;
 import java.io.InputStream;
@@ -47,12 +44,12 @@ public class WipeDataActivity extends Activity {
         }
         final String[] lines = s.split("\n");
         for (String line : lines) {
-            if (!line.toLowerCase(Locale.US).contains("asec")) {
+            if (!line.toLowerCase(Locale.ENGLISH).contains("asec")) {
                 if (line.matches(reg)) {
                     String[] parts = line.split(" ");
                     for (String part : parts) {
                         if (part.startsWith("/"))
-                            if (!part.toLowerCase(Locale.US).contains("vold"))
+                            if (!part.toLowerCase(Locale.ENGLISH).contains("vold"))
                                 out.add(part);
                     }
                 }

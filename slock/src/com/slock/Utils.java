@@ -10,17 +10,7 @@ import android.util.Log;
 public class Utils {
     private static final String TAG = "SLOCK";
     
-    /*protected static void sendSMS(Context context, String address, String content)
-    {        
-        String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
-        
-        PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
- 
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(address, null, content, sentPI, deliveredPI);
-    }*/
+    private static DevicePolicyManager devicePolicyManager;
 
     static void sendSMS(Context paramContext, String address, String content)
     {
@@ -29,36 +19,16 @@ public class Utils {
     }
     
     protected static void lockDeviceDefault(Context context) {
-        DevicePolicyManager devicePolicyManager = (DevicePolicyManager) context
-                .getSystemService(Context.DEVICE_POLICY_SERVICE);
+        devicePolicyManager = (DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
         final String password = "sLOCK";
         if (password.length() > 0) {
             devicePolicyManager.resetPassword(password, 0);
         }
+        Log.i(TAG, "Locking device");
         devicePolicyManager.lockNow();
-    }
-    
-    protected static void lockDevice(Context context) {
+        Utils.sendSMS(context, SMSReceiver.address, "[SLOCK] Locked device with password: " + password);
         
-        DevicePolicyManager devicePolicyManager = (DevicePolicyManager) context
-                .getSystemService(Context.DEVICE_POLICY_SERVICE);
-        final String password = "sLOCK";
-        
-        if (devicePolicyManager.isAdminActive(SLOCKMainActivity.adminComponent)) {
-            if (password.length() > 0) {
-                devicePolicyManager.resetPassword(password, 0);
-            }
-            
-            try {
-                Log.i(TAG, "Locking device");
-                devicePolicyManager.lockNow();
-                Utils.sendSMS(context, SMSReceiver.address, "SLOCK: Locked device with password: " + password);
-            } catch (Exception e) {
-                Log.wtf(TAG, "Failed to lock device");
-                Log.wtf(TAG, e.toString());
-                Utils.sendSMS(context, SMSReceiver.address, "SLOCK: Failed to lock device. Error: " + e.toString());
-            }
-        }
+        System.exit(0);
     }
 
 }
